@@ -16,7 +16,7 @@ public abstract class Engine implements Runnable {
 	private Display display;
 	private Thread thread;
 	private long startTimer = 0L;
-	boolean running;
+	private boolean running;
 	
 	protected final byte KEYBOARD = Keyboard.CODE;
 	protected final byte MOUSE = Mouse.CODE;
@@ -33,7 +33,7 @@ public abstract class Engine implements Runnable {
 		display = new Display(new Window(name, width, height));
 		screen = new Screen(width, height, 1.0);
 	}
-
+	
 	protected final void createDisplay(String name, int width, int height, double scale) {
 		startTimer = System.currentTimeMillis();
 		display = new Display(new Window(name, width, height));
@@ -84,6 +84,10 @@ public abstract class Engine implements Runnable {
 		display.show();
 	}
 
+	public boolean isRunnning() {
+		return running;
+	}
+	
 	protected Screen getScreen() {
 		return screen;
 	}

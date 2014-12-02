@@ -2,6 +2,7 @@ package com.zozingzeus.myproject;
 
 import java.awt.event.KeyEvent;
 
+import com.zozingzeus.myproject.engine.BlueBrickTile;
 import com.zozingzeus.myproject.engine.Engine;
 import com.zozingzeus.myproject.engine.GrassTile;
 import com.zozingzeus.myproject.engine.RockTile;
@@ -24,31 +25,44 @@ private int mx, my;
 private TiledLevel test;
 private Player player;
 
-private Sprite grass, rock;
+private boolean audio = true;
+
+private Sprite grass, rock, bluebrick;
 private Menu menu = new Menu(new MenuOption[] { new MenuOption("Play", new Action() {
 	public void action() {
 		State.setState(State.GAME);
 	}
-}), new MenuOption("Options", null), new MenuOption("About", null), new MenuOption("Quit", new Action() {
+}), new MenuOption("Options", new Action() {
+	public void action() {
+		State.setState(State.OPTIONS);
+	}
+}), new MenuOption("About", null), new MenuOption("Quit", new Action() {
 	public void action() {
 		System.exit(0);
+	}
+}) });
+private Menu options = new Menu(new MenuOption[] { new MenuOption("Audio: " + (audio ? "ON" : "OFF"), new Action() {
+	public void action() {
+		audio = !audio;
 	}
 }) });
 
 private void levels() {
 	test = new TiledLevel("res/levels/level.png");
-	test.addTileCode(0xffffff, new GrassTile(grass.getWidth(), grass.getHeight(), grass));
+	test.addTileCode(0x00ff00, new GrassTile(grass.getWidth(), grass.getHeight(), grass));
 	test.setTileSize(32);
-	test.addTileCode(0xff00ff, new RockTile(rock));
+	test.addTileCode(0xf0f0f0, new RockTile(rock));
+	test.addTileCode(0x0000ff, new BlueBrickTile(bluebrick));
 	test.add(player);
 }
 
 protected void init() {
 	grass = new Sprite(Texture.load("res/grass.png"));
 	rock = new Sprite(Texture.load("res/rock.png"));
+	bluebrick = new Sprite(Texture.load("res/bluebrick.png"));
 	player = new Player();
 	levels();
-	createDisplay("Cherno 0.1a", 960, 540, 2.0);
+	createDisplay("Unnamed Game Alpha", 960, 540, 1.7);
 	setInput(KEYBOARD | MOUSE);
 	start();
 	State.setState(State.MENU);
@@ -70,13 +84,17 @@ protected void update() {
 }
 
 protected void render() {
-	clear(Color.WHITE);
+	clear(Color.BLACK);
 	if (State.getState() == State.GAME) {
 		render(0, 0, test);
 	} else if (State.getState() == State.MENU) {
 		fillRect(0, 0, 960, 540, new Color(0xff00ff));
 		screen.render(mx, my, grass);
 		menu.render(50, 50, screen);
+	} else if (State.getState() == State.OPTIONS) {
+		fillRect(0, 0, 960, 540, new Color(0x0000ff));
+		screen.render(mx, my, grass);
+		options.render(50, 50, screen);
 	}
 	show();
 }

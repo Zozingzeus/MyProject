@@ -9,7 +9,7 @@ import com.zozingzeus.myproject.engine.level.tile.Tile;
 
 public class TiledLevel extends Level {
 
-	private int tileSize = 64;
+	private int tileSize = 32;
 	private int[] tiles;
 	private Map<Integer, Tile> tileCodes = new HashMap<Integer, Tile>();
 

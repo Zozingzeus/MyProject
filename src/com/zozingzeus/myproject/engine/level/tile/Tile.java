@@ -6,7 +6,7 @@ import com.zozingzeus.myproject.engine.interfaces.Renderable;
 public abstract class Tile implements Renderable {
 
 	private Sprite sprite;
-	protected int width = 64, height = 64;
+	protected int width = 32, height = 32;
 
 	public Tile(Sprite sprite) {
 		this.sprite = sprite;

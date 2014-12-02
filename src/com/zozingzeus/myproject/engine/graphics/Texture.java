@@ -3,12 +3,14 @@ package com.zozingzeus.myproject.engine.graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.FileInputStream;
+
 import javax.imageio.ImageIO;
 
 public class Texture {
 
 	private int width, height;
-	private int[] pixels, pixelsrgb;
+	private static int[] pixels;
+	private int[] pixelsrgb;
 
 	public static final int FORMAT_RGB = 0x0;
 	public static final int FORMAT_RGBA = 0x1;
@@ -32,6 +34,17 @@ public class Texture {
 			e.printStackTrace();
 		}
 		return new Texture(width, height, pixels);
+	}
+	
+	public static Texture spritesheet(int xpos, int ypos, String path) {
+		try {
+			BufferedImage image = ImageIO.read(new FileInputStream(path));
+			image.getRGB(xpos * 32, ypos * 32, 32, 32, pixels, 0, 32);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return new Texture(32, 32, pixels);
 	}
 
 	public int getWidth() {

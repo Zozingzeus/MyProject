@@ -45,7 +45,7 @@ public class Display {
 
 	public Graphics getGraphics() {
 		if (graphics == null) {
-			// TODO: Handle
+			System.err.println("Graphics is null.");
 		}
 		return graphics;
 	}

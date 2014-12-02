@@ -32,6 +32,7 @@ public class Window extends Canvas {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		frame.requestFocus();
 	}
 
 	public int getWidth() {

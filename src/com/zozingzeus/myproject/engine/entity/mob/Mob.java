@@ -21,8 +21,8 @@ public abstract class Mob extends Entity {
 		if (level instanceof TiledLevel) {
 			TiledLevel level = (TiledLevel) this.level;
 			for (int c = 0; c < 4; c++) {
-				int xt = ((x + xa) - c % 2 * getWidth()) / level.getTileSize();
-				int yt = ((y + ya) - c / 2 * getHeight()) / level.getTileSize();
+				int xt = ((x + xa) - c % 2 * 3) / level.getTileSize();
+				int yt = ((y + ya) - c / 2 * 2 + 14) / level.getTileSize();
 				if (level.getTile(xt, yt) == null) continue;
 				if (level.getTile(xt, yt).solid()) {
 					return true;
